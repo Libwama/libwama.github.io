@@ -37,6 +37,33 @@ jobs:
           fi
           test -f site/index.html
 
+      - name: Add social links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("site/index.html")
+          html = p.read_text(encoding="utf-8")
+          css = """
+          <style>
+          .social-connect{margin:28px 0 8px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+          .social-connect a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid rgba(201,162,39,.35);border-radius:999px;text-decoration:none;font-weight:600;font-size:.9rem;transition:transform .2s ease,box-shadow .2s ease}
+          .social-connect a:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,31,58,.12)}
+          .social-linkedin{color:#0a66c2}.social-whatsapp{color:#128c7e}.social-facebook{color:#1877f2}
+          </style>
+          """
+          links = """
+          <div class="social-connect" aria-label="Connect with Gabriel Libwama">
+            <a class="social-linkedin" href="https://www.linkedin.com/in/gabriel-libwama-31278a43b" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="social-whatsapp" href="https://wa.me/254745673686" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a class="social-facebook" href="https://www.facebook.com/Libwama" target="_blank" rel="noopener noreferrer">Facebook</a>
+          </div>
+          """
+          if 'class="social-connect"' not in html:
+              html = html.replace("</head>", css + "</head>", 1)
+              html = html.replace("</body>", links + "</body>", 1)
+          p.write_text(html, encoding="utf-8")
+          PY
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
