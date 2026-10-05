@@ -64,6 +64,29 @@ jobs:
           p.write_text(html, encoding="utf-8")
           PY
 
+      - name: Publish first article
+        run: |
+          mkdir -p site/articles
+          cp articles/giving-meaning-to-numbers.html site/articles/giving-meaning-to-numbers.html
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("site/index.html")
+          html = p.read_text(encoding="utf-8")
+          section = """
+          <section style="max-width:1000px;margin:40px auto;padding:0 24px;">
+            <div style="background:#0B1F3A;color:#fff;border-radius:18px;padding:34px;">
+              <div style="color:#C9A227;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;">Featured Article</div>
+              <h2 style="margin:10px 0;color:#fff;">Giving Meaning to Numbers: Why Financial Understanding Matters</h2>
+              <p style="max-width:720px;color:#dbe4ef;line-height:1.7;">Why financial information matters—and how understanding numbers can promote accountability, informed decisions, and sustainable growth.</p>
+              <a href="articles/giving-meaning-to-numbers.html" style="display:inline-block;margin-top:8px;padding:11px 18px;border-radius:999px;background:#C9A227;color:#0B1F3A;text-decoration:none;font-weight:700;">Read the article →</a>
+            </div>
+          </section>
+          """
+          if "articles/giving-meaning-to-numbers.html" not in html:
+              html = html.replace("</body>", section + "</body>", 1)
+          p.write_text(html, encoding="utf-8")
+          PY
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
