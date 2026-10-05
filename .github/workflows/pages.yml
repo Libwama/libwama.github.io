@@ -46,8 +46,7 @@ jobs:
           css = """
           <style>
           .social-connect{margin:28px 0 8px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-          .social-connect a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid rgba(201,162,39,.35);border-radius:999px;text-decoration:none;font-weight:600;font-size:.9rem;transition:transform .2s ease,box-shadow .2s ease}
-          .social-connect a:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(11,31,58,.12)}
+          .social-connect a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid rgba(201,162,39,.35);border-radius:999px;text-decoration:none;font-weight:600;font-size:.9rem}
           .social-linkedin{color:#0a66c2}.social-whatsapp{color:#128c7e}.social-facebook{color:#1877f2}
           </style>
           """
@@ -60,9 +59,7 @@ jobs:
           """
           if 'class="social-connect"' not in html:
               html = html.replace("</head>", css + "</head>", 1)
-              html = html.replace("
-
-</body>", links + "</body>", 1)
+              html = html.replace("</body>", links + "</body>", 1)
           p.write_text(html, encoding="utf-8")
           PY
 
@@ -76,8 +73,8 @@ jobs:
           from pathlib import Path
           p = Path("site/index.html")
           html = p.read_text(encoding="utf-8")
-          section = """
-          <section style="max-width:1000px;margin:40px auto;padding:0 24px;">
+          first = """
+          <section style="max-width:1000px;margin:40px auto 24px;padding:0 24px;">
             <div style="background:#0B1F3A;color:#fff;border-radius:18px;padding:34px;">
               <div style="color:#C9A227;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;">Featured Article</div>
               <h2 style="margin:10px 0;color:#fff;">Giving Meaning to Numbers: Why Financial Understanding Matters</h2>
@@ -86,11 +83,7 @@ jobs:
             </div>
           </section>
           """
-          if "articles/giving-meaning-to-numbers.html" not in html:
-              html = html.replace("</body>", section + "</body>", 1)
-          p.write_text(html, encoding="utf-8")
-          PY
-
+          second = """
           <section style="max-width:1000px;margin:24px auto 40px;padding:0 24px;">
             <div style="background:#fff;border:1px solid #e5e9ef;border-radius:18px;padding:34px;box-shadow:0 8px 28px rgba(11,31,58,.06);">
               <div style="color:#1F7A5C;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;">Giving Meaning to Numbers #2</div>
@@ -99,6 +92,13 @@ jobs:
               <a href="articles/5-financial-mistakes-small-businesses.html" style="display:inline-block;margin-top:8px;padding:11px 18px;border-radius:999px;background:#C9A227;color:#0B1F3A;text-decoration:none;font-weight:700;">Read the article →</a>
             </div>
           </section>
+          """
+          if "articles/giving-meaning-to-numbers.html" not in html:
+              html = html.replace("</body>", first + "</body>", 1)
+          if "articles/5-financial-mistakes-small-businesses.html" not in html:
+              html = html.replace("</body>", second + "</body>", 1)
+          p.write_text(html, encoding="utf-8")
+          PY
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -111,109 +111,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Add first website insight
-        run: |
-          mkdir -p site/insights
-          cat > site/insights/profit-is-not-the-same-as-cash.html <<'HTML'
-          <!doctype html>
-          <html lang="en">
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Profit Is Not the Same as Cash | Gabriel Libwama</title>
-            <meta name="description" content="A practical guide to understanding the difference between accounting profit and cash flow, and why both matter for business decisions.">
-            <style>
-              :root{--navy:#0B1F3A;--green:#1F7A5C;--gold:#C9A227;--grey:#F7F9FA;--text:#253247}
-              *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:var(--grey);line-height:1.75}
-              .wrap{max-width:900px;margin:auto;padding:0 22px}.top{background:var(--navy);color:#fff;padding:18px 0}
-              .brand{font-weight:700;letter-spacing:.04em}.brand span{color:#C9A227}
-              article{background:#fff;margin:42px auto;padding:48px 54px;border-radius:18px;box-shadow:0 12px 40px rgba(11,31,58,.08)}
-              .eyebrow{color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.82rem}
-              h1{font-family:Georgia,serif;color:var(--navy);font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;margin:12px 0 16px}
-              h2{color:var(--navy);font-size:1.45rem;margin-top:38px} h3{color:var(--green)}
-              .lead{font-size:1.15rem;color:#526174}.formula{background:var(--grey);border-left:4px solid var(--gold);padding:18px 20px;font-weight:700;margin:24px 0}
-              .example{border:1px solid #e5e9ef;border-radius:12px;padding:20px;margin:22px 0;background:#fff}
-              .takeaway{background:var(--navy);color:#fff;border-radius:14px;padding:25px;margin:30px 0}.takeaway strong{color:#C9A227}
-              a{color:var(--green)} .back{display:inline-block;margin-top:12px;text-decoration:none;font-weight:700}
-              footer{padding:25px 0 45px;text-align:center;color:#657286;font-size:.9rem}
-              @media(max-width:650px){article{padding:30px 22px;margin:25px auto}h1{font-size:2.2rem}}
-            </style>
-          </head>
-          <body>
-            <div class="top"><div class="wrap"><div class="brand">GABRIEL LIBWAMA <span>• Giving Meaning to Numbers.</span></div></div></div>
-            <main class="wrap">
-              <article>
-                <div class="eyebrow">Giving Meaning to Numbers #1</div>
-                <h1>Profit Is Not the Same as Cash</h1>
-                <p class="lead">A business can make a profit and still struggle to pay its bills. Understanding why is one of the simplest ways to start reading financial information more intelligently.</p>
-
-                <p>One of the most common misunderstandings in business is treating <strong>profit</strong> and <strong>cash</strong> as if they mean the same thing. They do not.</p>
-
-                <p>Profit generally measures the difference between income earned and expenses recognized over a period. Cash flow, on the other hand, tracks the movement of cash into and out of the business. A sale made on credit can contribute to profit before the customer actually pays, which creates a timing difference between accounting performance and available cash.</p>
-
-                <div class="formula">Profit = Income − Expenses</div>
-
-                <h2>A simple example</h2>
-                <div class="example">
-                  <p>Imagine a small business sells goods worth <strong>KSh 100,000</strong> on credit. The sale is properly recorded, but the customer will pay after 30 days.</p>
-                  <p>If the related costs have already been recognized, the transaction can contribute to the business's reported profit. But the KSh 100,000 has not yet arrived in the bank or cash till.</p>
-                  <p>The business may therefore look profitable while having less cash available to pay suppliers, wages, rent, transport, or other immediate obligations.</p>
-                </div>
-
-                <h2>So, what does profit tell you?</h2>
-                <p>Profit helps answer a fundamental question: <strong>Is the business earning more than it is spending, based on the applicable accounting rules?</strong></p>
-                <p>It is useful for evaluating performance over a period and understanding whether the underlying business activity is generating an accounting surplus.</p>
-
-                <h2>And what does cash flow tell you?</h2>
-                <p>Cash flow answers a different question: <strong>What is happening to the business's cash?</strong></p>
-                <p>The cash flow statement helps explain cash movements from operating, investing, and financing activities. This gives management another perspective on liquidity and how the business is funding its activities.</p>
-
-                <h2>Why the difference matters</h2>
-                <p>A growing business can experience a cash shortage when customers take longer to pay, inventory absorbs cash, or payments to suppliers and other obligations fall due before collections arrive. This is why looking at profit alone does not provide a complete picture of financial health.</p>
-
-                <div class="takeaway">
-                  <strong>Giving Meaning to Numbers:</strong><br>
-                  Don't ask only, “Did we make a profit?” Also ask, “Where is the cash, where did it come from, and where is it going?”
-                </div>
-
-                <h2>Three questions every business owner can ask</h2>
-                <ol>
-                  <li><strong>How much did we earn?</strong> Look at revenue and profit.</li>
-                  <li><strong>How much cash actually came in and went out?</strong> Review cash movements.</li>
-                  <li><strong>What is tying up our cash?</strong> Examine receivables, inventory, debt repayments, and other commitments.</li>
-                </ol>
-
-                <h2>The bigger lesson</h2>
-                <p>Financial statements are not simply reports prepared for filing or record keeping. They are tools for understanding what is happening inside an organization.</p>
-                <p>Profit tells part of the story. Cash tells another part. When the two are considered together, the numbers become much more useful for decision-making.</p>
-
-                <p><strong>Numbers are more than figures. They tell a story.</strong></p>
-
-                <p><em>Sources for further reading:</em> Harvard Business School Online, “Cash Flow vs. Profit”; Open University OpenLearn, “Making a profit and generating cash.”</p>
-                <a class="back" href="../index.html">← Back to Gabriel Libwama's website</a>
-              </article>
-            </main>
-            <footer>© 2026 Gabriel Libwama · Accountant | Finance Professional · Giving Meaning to Numbers.</footer>
-          </body>
-          </html>
-          HTML
-
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path("site/index.html")
-          html = p.read_text(encoding="utf-8")
-          section = """
-          <section class="featured-insight" style="max-width:1000px;margin:40px auto;padding:0 24px;">
-            <div style="background:#0B1F3A;color:#fff;border-radius:18px;padding:34px;position:relative;overflow:hidden;">
-              <div style="color:#C9A227;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;">Giving Meaning to Numbers #1</div>
-              <h2 style="margin:10px 0;color:#fff;">Profit Is Not the Same as Cash</h2>
-              <p style="max-width:720px;color:#dbe4ef;line-height:1.7;">A business can make a profit and still struggle to pay its bills. Learn why profit and cash flow tell different parts of the financial story.</p>
-              <a href="insights/profit-is-not-the-same-as-cash.html" style="display:inline-block;margin-top:8px;padding:11px 18px;border-radius:999px;background:#C9A227;color:#0B1F3A;text-decoration:none;font-weight:700;">Read the full insight →</a>
-            </div>
-          </section>
-          """
-          if "profit-is-not-the-same-as-cash.html" not in html:
-              html = html.replace("</body>", section + "</body>", 1)
-          p.write_text(html, encoding="utf-8")
-          PY
