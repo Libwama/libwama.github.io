@@ -61,14 +61,7 @@ jobs:
           if 'class="social-connect"' not in html:
               html = html.replace("</head>", css + "</head>", 1)
               html = html.replace("
-          <section style="max-width:1000px;margin:24px auto 40px;padding:0 24px;">
-            <div style="background:#fff;border:1px solid #e5e9ef;border-radius:18px;padding:34px;box-shadow:0 8px 28px rgba(11,31,58,.06);">
-              <div style="color:#1F7A5C;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;">Giving Meaning to Numbers #2</div>
-              <h2 style="margin:10px 0;color:#0B1F3A;">5 Financial Mistakes Small Businesses Make and How to Avoid Them</h2>
-              <p style="max-width:720px;color:#526174;line-height:1.7;">Five practical financial habits that can help small businesses improve control, accountability, and sustainable growth.</p>
-              <a href="articles/5-financial-mistakes-small-businesses.html" style="display:inline-block;margin-top:8px;padding:11px 18px;border-radius:999px;background:#C9A227;color:#0B1F3A;text-decoration:none;font-weight:700;">Read the article →</a>
-            </div>
-          </section>
+
 </body>", links + "</body>", 1)
           p.write_text(html, encoding="utf-8")
           PY
@@ -97,6 +90,15 @@ jobs:
               html = html.replace("</body>", section + "</body>", 1)
           p.write_text(html, encoding="utf-8")
           PY
+
+          <section style="max-width:1000px;margin:24px auto 40px;padding:0 24px;">
+            <div style="background:#fff;border:1px solid #e5e9ef;border-radius:18px;padding:34px;box-shadow:0 8px 28px rgba(11,31,58,.06);">
+              <div style="color:#1F7A5C;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;">Giving Meaning to Numbers #2</div>
+              <h2 style="margin:10px 0;color:#0B1F3A;">5 Financial Mistakes Small Businesses Make and How to Avoid Them</h2>
+              <p style="max-width:720px;color:#526174;line-height:1.7;">Five practical financial habits that can help small businesses improve control, accountability, and sustainable growth.</p>
+              <a href="articles/5-financial-mistakes-small-businesses.html" style="display:inline-block;margin-top:8px;padding:11px 18px;border-radius:999px;background:#C9A227;color:#0B1F3A;text-decoration:none;font-weight:700;">Read the article →</a>
+            </div>
+          </section>
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
